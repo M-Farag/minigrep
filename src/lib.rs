@@ -5,9 +5,9 @@ pub struct Config{
 }
 
 impl Config {
-    pub fn new() -> Self
+    pub fn new(file_path:String, query:String) -> Self
     {
-        Self { file_path:String::new(), query:String::new() }
+        Self { file_path, query }
     }
 
     pub fn file_path(&self) -> &String
@@ -17,10 +17,11 @@ impl Config {
 }
 
 pub fn parse_config(arguments:&Vec<String>) ->Config { 
-    let mut config = Config::new();
-    config.file_path = arguments[1].clone();
-    config.query = arguments[2].clone();
-    
+    let config = Config::new(
+     arguments[1].clone(),
+     arguments[2].clone()
+    );
+
     config
 }
 
