@@ -48,4 +48,22 @@ mod main_lib_tests {
         let config = Config::new(&args).unwrap();
     }
 
+    #[test]
+    fn test_config_first_argument_is_file_path()
+    {
+        let args:Vec<String> = vec![String::from("0"),String::from("1"),String::from("2")];
+        let config = Config::new(&args).unwrap();
+
+        assert_eq!(&String::from("1"),config.file_path());
+    }
+
+    #[test]
+    fn test_config_second_argument_is_query()
+    {
+        let args:Vec<String> = vec![String::from("0"),String::from("1"),String::from("2")];
+        let config = Config::new(&args).unwrap();
+
+        assert_eq!(&String::from("2"),config.query());
+    }
+
 }
