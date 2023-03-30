@@ -1,3 +1,5 @@
+use std::{error::Error, fs};
+
 #[derive(Debug)]
 pub struct Config{
     file_path:String,
@@ -23,6 +25,13 @@ impl Config {
     {
         &self.file_path
     }
+}
+
+pub fn run(config:Config) -> Result<(),Box<dyn Error>>
+{
+    let contents = fs::read_to_string(config.file_path())?;
+    println!("Contents are: {:#?}",contents);
+    Ok(())
 }
 
 
@@ -64,6 +73,24 @@ mod main_lib_tests {
         let config = Config::new(&args).unwrap();
 
         assert_eq!(&String::from("2"),config.query());
+    }
+
+    #[test]
+    fn test_run_returns_ok_with_valid_file_path()
+    {
+        let args:Vec<String> = vec![String::from("0"),String::from("src/main.rs"),String::from("2")];
+        let config = Config::new(&args).unwrap();
+
+        assert!(run(config).is_ok());
+    }
+
+    #[test]
+    fn test_run_returns_err_with_invalid_file_path()
+    {
+        let args:Vec<String> = vec![String::from("0"),String::from("src/main.rs1"),String::from("2")];
+        let config = Config::new(&args).unwrap();
+
+        assert!(run(config).is_err());
     }
 
 }
