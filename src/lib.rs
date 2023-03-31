@@ -30,7 +30,6 @@ impl Config {
 pub fn run(config:Config) -> Result<(),Box<dyn Error>>
 {
     let contents = fs::read_to_string(config.file_path())?;
-    println!("Contents are: {:#?}",contents);
     Ok(())
 }
 
@@ -91,6 +90,20 @@ mod main_lib_tests {
         let config = Config::new(&args).unwrap();
 
         assert!(run(config).is_err());
+    }
+
+    #[test]
+    fn test_search_returns_valid_result()
+    {
+        let query = "duct";
+        let contents = "\
+        Hello world
+        I am a rustacean
+        I love rust
+        I am productive in rust
+        I have a duct tape
+        ";
+        assert_eq!(vec!["I am productive in rust","I have a duct tape"],search(query,contents));
     }
 
 }
