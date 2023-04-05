@@ -6,14 +6,14 @@ fn main(){
     let arguments:Vec<String> = env::args().collect();
     let config = mg::Config::new(&arguments).unwrap_or_else(
         |err| {
-            println!("Error is: {}",err);
+            eprintln!("Error is: {}",err);
             process::exit(1);
         }
     );
 
     // we used if let because we don't care about the Ok() case as it returns a unit type
     if let Err(e) = mg::run(config) {
-        println!("Error is: {}",e);
+        eprintln!("Error is: {}",e);
         process::exit(1);
     }
 
