@@ -39,16 +39,8 @@ pub fn run(config:Config) -> Result<(),Box<dyn Error>>
 
 fn search<'a>(query:&str, contents:&'a str) -> Vec<&'a str>
 {
-    let mut results: Vec<&str> = Vec::new();
-    for line in contents.lines()
-    {
-        if line.contains(query){
-            results.push(line)
-        }
-    }
-    results
+    contents.lines().filter(|line|line.contains(query)).collect()
 }
-
 
 #[cfg(test)]
 mod main_lib_tests {
@@ -121,5 +113,6 @@ mod main_lib_tests {
         ";
         assert_eq!(vec!["        I am productive in rust", "        I have a duct tape"],search(query,contents));
     }
+    
 
 }
